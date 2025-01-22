@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="lt">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Knygų Apžvalgų Programėlė</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="./app.js" defer></script>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Knygų Apžvalgų Programėlė</h1>
+      <form id="reviewForm">
+        <input
+          type="text"
+          id="bookTitle"
+          placeholder="Knygos pavadinimas"
+          required
+        />
+        <select id="bookGenre" required>
+          <option value="" disabled selected>Žanras</option>
+          <option value="veiksmo">Veiksmo</option>
+          <option value="siaubo">Siaubo</option>
+          <option value="romanas">Romanas</option>
+          <option value="komedija">Komedija</option>
+          <option value="pasaka">Pasaka</option>
+        </select>
+        <select id="rating" required>
+          <option value="" disabled selected>Pasirinkite įvertinimą</option>
+          <option value="1">1 - Prasta</option>
+          <option value="2">2 - Vidutinė</option>
+          <option value="3">3 - Gera</option>
+          <option value="4">4 - Labai gera</option>
+          <option value="5">5 - Puiki</option>
+        </select>
+        <textarea
+          id="reviewText"
+          placeholder="Parašykite apžvalgą"
+          required
+        ></textarea>
+        <button type="submit">Pridėti apžvalgą</button>
+      </form>
+
+      <h2>Visos Apžvalgos</h2>
+      <ul id="reviewList"></ul>
+    </div>
+  </body>
+</html>

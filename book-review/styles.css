@@ -1,0 +1,145 @@
+/* Global Styles */
+body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f9fa;
+    color: #333;
+  }
+
+  .container {
+    max-width: 900px;
+    margin: 30px auto;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  h1 {
+    font-size: 30px;
+    color: #4CAF50;
+    margin-bottom: 20px;
+  }
+
+  /* Form Styles */
+  form input,
+  form select,
+  form textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 8px 0;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+  }
+
+  form button {
+    width: 100%;
+    padding: 12px;
+    background-color: #4CAF50;
+    color: white;
+    font-size: 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  form button:hover {
+    background-color: #45a049;
+    transform: translateY(-2px);
+  }
+
+  /* Review List Styles */
+  ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+  }
+
+  ul li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 15px;
+    margin: 10px 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+
+  ul li:hover {
+    transform: scale(1.02);
+  }
+
+  .review-item {
+    width: 70%;
+    color: #333;
+    font-size: 14px;
+    line-height: 1.4;
+    text-align: left;
+  }
+
+  .review-item strong {
+    display: block;
+    font-size: 16px;
+    color: #4CAF50;
+    margin-bottom: 5px;
+  }
+
+  .review-item p {
+    font-size: 12px;
+    color: #666;
+  }
+
+  .review-actions {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+
+  .review-actions button {
+    padding: 8px 16px;
+    background-color: #3498db;
+    color: white;
+    font-size: 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .review-actions button:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+  }
+
+  .review-actions button:active {
+    transform: translateY(2px);
+  }
+
+  .delete-button {
+    background-color: #e74c3c;
+  }
+
+  .delete-button:hover {
+    background-color: #c0392b;
+  }
+
+  .edit-button {
+    background-color: #f39c12;
+  }
+
+  .edit-button:hover {
+    background-color: #e67e22;
+  }
+
+  h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+  }
