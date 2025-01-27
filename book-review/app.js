@@ -1,87 +1,75 @@
-// Užduotis: sukurti atsiliepimų puslapį, kuriame būtų galima peržiūrėti, pridėti, redaguoti ir ištrinti atsiliepimus apie knygas.
-// 1. Reikia panaudoti POST, PATCH, DELETE ir GET metodus. (GET metodas jau panaudotas)
-// 2. Reikia panaudoti json-server, kad būtų galima saugoti atsiliepimus. (db.json failas jau duotas su pavyzdžiu)
+// json-server – yra skirta sukurti netikrą API serverio prieigą. Galėsime pasiekti su GET, POST, PUT, PATCH, DELETE
+// json-server --version – pasitikrinti ar yra instaliuotas json-server ir ar grąžina versiją
+// json-server --watch path_iki_failo.json – paleidžia serverį ir nustato kelią iki failo kuris taps duomenų baze
 
-const apiUrl = 'http://localhost:3000/reviews';
-const reviewList = document.getElementById('reviewList');
+const apiUrl = 'http://localhost:3000/students';
 
-// GET metodas
-async function fetchReviews() {
-  const response = await fetch(apiUrl);
-  const reviews = await response.json();
-  reviewList.innerHTML = '';
-  reviews.forEach((review) => {
-    const reviewItem = document.createElement('li');
-    reviewItem.innerHTML = `
-      <div class="review-item">
-        <strong>${review.title}</strong>
-        <div>Žanras: <b>${review.genre}</b></div>
-        <div>Reitingas: <b>${review.rating}</b> / 5</div>
-        <p>${review.reviewText}</p>
-      </div>
-      <div class="review-actions">
-        <button onclick="editReview('${review.id}','${review.title}','${review.genre}','${review.rating}','${review.reviewText}')">Edit</button>
-        <button onclick="deleteReview('${review.id}')">Delete</button>
-      </div>
-    `;
-    reviewList.appendChild(reviewItem);
-  });
+// GET – gražina duomenis iš API
+async function getStudents() {
+  try {
+    const response = await fetch(apiUrl);
+
+    if (!response.ok) {
+      throw new Error('Nepavyko gauti studentų sąrašo!');
+    }
+
+    const students = await response.json();
+    const studentList = document.getElementById('student-list');
+    studentList.innerHTML = '';
+    students.forEach((student) => {
+      const row = document.createElement('tr');
+      row.innerHTML = `
+        <td>${student.id}</td>
+        <td>${student.name}</td>
+        <td>${student.age}</td>
+        <td>
+          <button onclick="editStudent('${student.id}', '${student.name}', '${student.age}')">Redaguoti</button>
+          <button onclick="deleteStudent('${student.id}')">Ištrinti</button>
+        </td>
+      `;
+      studentList.append(row);
+    });
+  } catch (error) {
+    console.error(error);
+    alert('Klaida gaunant studentų sąrašą!');
+  }
 }
 
-// Kai dokumentas užkrautas, iškviečiamas fetchReviews funkcija
-document.addEventListener('DOMContentLoaded', fetchReviews);
-
-//------------------------------------------------------------------
-// POST - sukurti nauja irasa
-
+// POST – sukurti naują įrašą
 document
-  .getElementById('reviewForm')
+  .getElementById('add-student-form')
   .addEventListener('submit', async (event) => {
-    // PreventDefault - neleidzia puslapiui persikrauti
+    // preventDefault – neleidžia puslapiui persikrauti
     event.preventDefault();
-    const bookTitle = document.getElementById('bookTitle').value;
-    const bookGenre = document.getElementById('bookGenre').value;
-    const rating = document.getElementById('rating').value;
-    const reviewText = document.getElementById('reviewText').value;
-
-    console.log(bookTitle, bookGenre, rating, reviewText);
+    const name = document.getElementById('name').value;
+    const age = document.getElementById('age').value;
 
     try {
       const response = await fetch(apiUrl, {
-        // Nurodau, kad siunciu POST request kuris sukuria nauja irasa
         method: 'POST',
-        // Nurodome kad siunciame JSON tipo duomenis i serveri
         headers: {
           'Content-Type': 'application/json',
         },
-        // Nurodau kokius duomenis siunciu i serveri, siuo atveju title ir genre objektus
-        body: JSON.stringify({
-          title: bookTitle,
-          genre: bookGenre,
-          rating,
-          reviewText,
-        }),
+        body: JSON.stringify({ name, age }),
       });
 
-      fetchReviews();
       if (!response.ok) {
-        throw new Error('Nepavyko sukuri naujo review!');
+        throw new Error('Nepavyko sukurti naujo studento!');
       }
     } catch (error) {
-      console.error('Klaida kuriant nauja review!');
-      alert('Klaida kuriant nauja review!');
+      console.error('Klaida kuriant naują studentą:', error);
+      alert('Klaida kuriant naują studentą!');
     }
+
+    getStudents();
   });
 
-// PATCH - atnaujinti irasa
+// PATCH – atnaujinti įrašą
+async function editStudent(id, name, age) {
+  const newName = prompt('Naujas vardas:', name);
+  const newAge = prompt('Naujas amžius:', age);
 
-async function editReview(id, title, genre, rating, reviewText) {
-  const newTitle = prompt('Naujas bookTitle', title);
-  const newGenre = prompt('Naujas bookGenre', genre);
-  const newRating = prompt('Naujas rating', rating);
-  const newReviewText = prompt('Naujas reviewText', reviewText);
-
-  if (newTitle && newGenre && newRating && newReviewText) {
+  if (newName && newAge) {
     try {
       const response = await fetch(`${apiUrl}/${id}`, {
         method: 'PATCH',
@@ -89,40 +77,39 @@ async function editReview(id, title, genre, rating, reviewText) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          title: newTitle,
-          genre: newGenre,
-          rating: newRating,
-          reviewText: newReviewText,
+          name: newName,
+          age: Number(newAge),
         }),
       });
-      fetchReviews();
+
       if (!response.ok) {
-        throw new Error('Nepavyko redaguoti review!');
+        throw new Error('Nepavyko redaguoti studento!');
       }
     } catch (error) {
-      console.error('Klaida redaguojant review!');
-      alert('Klaida redaguojant review!');
+      console.error('Klaida redaguojant studentą:', error);
+      alert('Klaida redaguojant studentą!');
     }
+
+    getStudents();
   }
 }
 
-// DELETE - istrinti irasa
-
-async function deleteReview(id) {
+// DELETE – ištrinti įrašą
+async function deleteStudent(id) {
   try {
     const response = await fetch(`${apiUrl}/${id}`, {
       method: 'DELETE',
     });
 
     if (!response.ok) {
-      throw new Error('Nepavyko istrinti review');
+      throw new Error('Nepavyko ištrinti studento!');
     }
-
-    fetchReviews();
   } catch (error) {
-    console.error('Klaida istrinant review!');
-    alert('Klaida trinant review!');
+    console.error('Klaida ištrinant studentą:', error);
+    alert('Klaida trinant studentą.');
   }
+
+  getStudents();
 }
 
-fetchReviews();
+getStudents();
