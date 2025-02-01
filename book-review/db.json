@@ -1,11 +1,11 @@
 {
   "reviews": [
     {
+      "id": "2887",
       "title": "Senelė ir senelis",
-      "genre": "komedija",
-      "rating": "2",
-      "reviewText": "ačiū",
-      "id": "a8f5"
+      "genre": "pasaka",
+      "rating": "4",
+      "reviewText": "Patiko"
     }
   ]
 }
