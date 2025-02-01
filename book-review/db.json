@@ -1,3 +1,11 @@
 {
-  "reviews": []
+  "reviews": [
+    {
+      "title": "Senelė ir senelis",
+      "genre": "komedija",
+      "rating": "2",
+      "reviewText": "ačiū",
+      "id": "a8f5"
+    }
+  ]
 }
